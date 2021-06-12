@@ -36,7 +36,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .tab-contral {
   display: flex;
   text-align: center;
