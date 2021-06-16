@@ -95,7 +95,6 @@ export default {
     });
   },
   destroyed() {
-    console.log("11");
   },
   activated() {
     this.$refs.scroll.scrollTo(0, this.saveY, 0);

@@ -22,6 +22,10 @@ const routes = [{
   {
     path: "/profile",
     component: () => import( /* webpackChunkName: "about" */ '../views/profile/Profile.vue')
+  },
+  {
+    path: '/detail/:iid',
+    component: () => import( /* webpackChunkName: "about" */ '../views/detail/Detail.vue')
   }
 ]
 
