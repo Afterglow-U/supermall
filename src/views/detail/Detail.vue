@@ -28,6 +28,8 @@
       ></detail-comment-info>
       <goods-list ref="goods" :goods="recommends"></goods-list>
     </scroll>
+    <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
+    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -39,9 +41,11 @@ import DetailShopInfo from "./childComps/DetailShopInfo.vue";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo.vue";
 import DetailParamsInfo from "./childComps/DetailParamsInfo.vue";
 import DetailCommentInfo from "./childComps/DetailCommentInfo.vue";
+import DetailBottomBar from "./childComps/DetailBottomBar.vue";
 
 import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
+import BackTop from "components/content/backTop/BackTop";
 
 import {
   getDetail,
@@ -61,8 +65,10 @@ export default {
     DetailGoodsInfo,
     DetailParamsInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     Scroll,
     GoodsList,
+    BackTop,
   },
   data() {
     return {
@@ -76,6 +82,7 @@ export default {
       recommends: [],
       themeTopYs: [],
       currentIndex: 0,
+      isShowBackTop: false,
     };
   },
   created() {
@@ -148,6 +155,22 @@ export default {
           this.$refs.nav.currentIndex = this.currentIndex;
         }
       }
+      // 判断BackTop是否显示
+      this.isShowBackTop = -position.y > 670;
+    },
+    backClick() {
+      this.$refs.scroll.scroll.scrollTo(0, 0, 300);
+    },
+    addToCart() {
+      // 获取购物车需要展示的信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.nowPrice;
+      product.iid = this.iid;
+      // 将商品添加到购物车
+      this.$store.dispatch("addCart", product);
     },
   },
 };
